@@ -3,13 +3,13 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
+title: 超哥的机器学习之路
+subtitle: 超哥的机器学习成长之路
 description: ''
 keywords:
-author: John Doe
-language: en
-timezone: ''
+author: 李文超
+language: zh-CN
+timezone: Asia/Shanghai
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
@@ -93,9 +93,15 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: replica
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: ''
+
+location: Shanghai
+email: lwch748@gmail.com
+avatar: http://www.fzlkz.com/uploads/allimg/c150928/144343432393V0-22Y9.jpg
+social:
+  github: https://github.com/lwch
