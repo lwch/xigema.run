@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>
+    Golang机器学习入门（一） | 超哥的机器学习之路
+  </title>
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="
+  样本特征
+  ">
+  
+  <meta name="author" content="李文超">
+
+  <meta http-equiv="Cache-Control" content="no-transform"/>
+  <meta http-equiv="Cache-Control" content="no-siteapp">
+  <meta name="theme-color" content="#1e2327">
+  <link rel="apple-touch-icon" href="https://github.githubassets.com/apple-touch-icon.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://github.githubassets.com/apple-touch-icon-180x180.png">
+
+  <link rel="icon" type="image/x-icon" href="https://github.githubassets.com/favicon.ico">
+  <link rel="stylesheet" href="/css/main.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+
+  
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/vue/1.0.25-csp/vue.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="超哥的机器学习之路" type="application/atom+xml">
+</head>
+
+<body id="replica-app">
+
+<nav class="navbar-wrapper">
+  <div class="navbar">
+    <div class="container clearfix">
+      <a href="/" class="navbar-logo"><i class="fa fa-github"></i></a>
+
+      <div class="navbar-search float-left desktop-only">
+        <div class="navbar-search-form">
+          <label for="gsc-i-id1">This website</label>
+          <div id="google-search">
+            <gcse:search></gcse:search>
+          </div>
+        </div>
+      </div>
+
+      <ul class="navbar-nav float-left">
+        
+        <li><a href="/archives">Archives</a></li>
+        
+        
+        <li><a href="/categories">Categories</a></li>
+        
+        
+        <li><a href="/tags">Tags</a></li>
+        
+        
+        <li class="desktop-only"><a href="/atom.xml" target="_blank">RSS</a></li>
+        
+      </ul>
+
+      <ul class="navbar-nav user-nav float-right desktop-only">
+        <li class="user-nav-notification">
+          <a><span class="user-nav-unread"></span><i class="fa fa-bell"></i></a>
+        </li>
+        <li>
+          <a><i class="fa fa-plus"></i> <i class="fa fa-caret-down"></i></a>
+        </li>
+        <li class="user-nav-logo">
+          <a><img src="https://raw.githubusercontent.com/lwch/xigema.run/master/avatar.jpg"> <i class="fa fa-caret-down"></i></i></a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <header class="header-wrapper desktop-only">
+  <div class="container header-site-detail">
+    <ul class="header-toolbar">
+      <li class="clearfix">
+        <a href="/archives" class="header-toolbar-left"><i
+                  class="fa fa-file-text"></i> Posts </a>
+        <a href="/archives"
+           class="header-toolbar-right"> 1 </a>
+      </li>
+      <li>
+        <a href="/tags" class="header-toolbar-left"><i
+                  class="fa fa-tags"></i> Tags </a>
+        <a href="/tags"
+           class="header-toolbar-right"> 1 </a>
+      </li>
+      <li>
+        <a href="/categories" class="header-toolbar-left"><i
+                  class="fa fa-folder-open"></i> Categories </a>
+        <a href="/categories"
+           class="header-toolbar-right"> 1 </a>
+      </li>
+    </ul>
+    <h2 class="header-title">
+      <i class="fa fa-book text-muted"></i>
+      <a href="/">超哥的机器学习之路</a>
+      
+      
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="header-tab-wrapper clearfix">
+      <span class="header-tab header-tab-selected"><i class="fa fa-thumbs-o-up"></i> Like</span>
+      <span class="header-tab"><i class="fa fa-share-alt"></i> Share</span>
+      <span class="header-tab"><i class="fa fa-comments-o"></i> Discussion</span>
+      <span class="header-tab"><i class="fa fa-bookmark-o"></i> Bookmark </span>
+      <span class="header-tab"><i class="fa fa-smile-o"></i> Smile <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+</header>
+
+
+<div class="post-container container">
+  <h3>
+    <i class="fa fa-user-o"></i>
+    李文超
+
+    <span class="post-date float-right" title="{{moment(1589820585000).format('MMM DD, YYYY, h:mm:ss A')}}">
+      
+          <i class="fa fa-pencil-square-o"></i>
+      
+      {{moment(1589820585000).fromNow()}}
+    </span>
+  </h3>
+
+  <article class="post-content">
+    <h1>Golang机器学习入门（一）</h1>
+    <p>本章将会讲解golang中如何读取样本文件。</p>
+<a id="more"></a>
+
+<h2 id="样本文件"><a href="#样本文件" class="headerlink" title="样本文件"></a>样本文件</h2><p>首先让我们来看一下什么是样本文件，以下数据摘自<a href="https://www.kaggle.com/justinas/housing-in-london" target="_blank" rel="noopener">kaggle伦敦房屋数据</a></p>
+<pre><code>date,area,average_price,code,houses_sold,no_of_crimes,borough_flag
+1995-01-01,city of london,91449,E09000001,17,,1
+1995-02-01,city of london,82203,E09000001,7,,1
+1995-03-01,city of london,79121,E09000001,14,,1
+1995-04-01,city of london,77101,E09000001,7,,1
+1995-05-01,city of london,84409,E09000001,10,,1
+1995-06-01,city of london,94901,E09000001,17,,1
+1995-07-01,city of london,110128,E09000001,13,,1
+1995-08-01,city of london,112329,E09000001,14,,1
+1995-09-01,city of london,104473,E09000001,17,,1</code></pre><p>从以上内容可见，样本文件是一个多行的文件，每一行为一个样本，每一列表示该样本的一个属性（特征）。</p>
+<h2 id="特征解释"><a href="#特征解释" class="headerlink" title="特征解释"></a>特征解释</h2><ol>
+<li><code>date</code>: 该字段表示采样日期</li>
+<li><code>area</code>: 该字段表示样本所属地区</li>
+<li><code>average_price</code>: 该字段表示房屋均价</li>
+<li><code>code</code>: 该字段表示所属地区的邮政编码</li>
+<li><code>houses_sold</code>: 该字段表示所属地区出售房屋数量</li>
+<li><code>no_of_crimes</code>: 该字段表示所属地区的犯罪案件数量</li>
+<li><code>borough_flag</code>: 该字段表示所属区域是否是一个自治区</li>
+</ol>
+<p>通过进一步观察发现，<code>date</code>字段为日期类型，<code>area</code>和<code>code</code>字段为字符串类型，其他所有字段均为数值类型。</p>
+<h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>下面让我们来考虑一下如何进行建模（创建数据结构），首先根据第一行内容我们可以得到一些column（字段）</p>
+<pre><code>type columnType int 
+
+const (
+    columnTime columnType = iota
+    columnString
+    columnInt
+    columnFloat
+)
+
+// Column data column
+type Column struct {
+    index      int 
+    name       string
+    t          columnType
+    timeParse  func(string) time.Time
+    timeFormat func(time.Time) string
+}</code></pre><p>根据上面的类型定义，我们需要支持<code>string</code>、<code>int</code>、<code>float</code>和<code>time</code>四种类型的字段（引入float类型仅为了方便运算）。类型中的<code>index</code>和<code>name</code>是为了定位到字段的位置与名称的，<code>timeParse</code>函数和<code>timeFormat</code>函数用于对日期时间类型的字段进行序列化与反序列化。</p>
+
+  </article>
+</div>
+
+
+    
+
+
+
+
+</div>
+
+<div class="footer-wrapper container">
+  <footer class="footer clearfix">
+    <div class="clearfix">
+    <a href="https://xigema.run" class="footer-logo">
+      <i class="fa fa-github"></i>
+    </a>
+    <ul class="footer-social-link">
+      <li>© 2019 李文超</li>
+      <li><a href="https://xigema.run">Home</a></li>
+      
+      <li><a href="https://github.com/lwch" target="_blank" rel="noopener">Github</a></li>
+      
+    </ul>
+    <div class="footer-theme-info">
+      Theme <a href="//github.com/sabrinaluo/hexo-theme-replica" target="_blank" rel="noopener">Replica</a>
+      by <a href="//github.com/sabrinaluo" target="_blank" rel="noopener">Hiitea</a> ❤ Powered by Hexo
+    </div>
+    </div>
+    
+  </footer>
+</div>
+
+
+
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
