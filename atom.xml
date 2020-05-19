@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://xigema.run/"/>
-  <updated>2020-05-19T17:09:17.733Z</updated>
+  <updated>2020-05-19T17:15:36.396Z</updated>
   <id>https://xigema.run/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://xigema.run/2020/05/18/Golang%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/"/>
     <id>https://xigema.run/2020/05/18/Golang%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%85%A5%E9%97%A8%EF%BC%88%E4%B8%80%EF%BC%89/</id>
     <published>2020-05-18T16:49:45.000Z</published>
-    <updated>2020-05-19T17:09:17.733Z</updated>
+    <updated>2020-05-19T17:15:36.396Z</updated>
     
     <content type="html"><![CDATA[<p>本章将会讲解golang中如何读取样本文件。</p><a id="more"></a><h2 id="样本文件"><a href="#样本文件" class="headerlink" title="样本文件"></a>样本文件</h2><p>首先让我们来看一下什么是样本文件，以下数据摘自<a href="https://www.kaggle.com/justinas/housing-in-london" target="_blank" rel="noopener">kaggle伦敦房屋数据</a></p><pre><code>date,area,average_price,code,houses_sold,no_of_crimes,borough_flag1995-01-01,city of london,91449,E09000001,17,,11995-02-01,city of london,82203,E09000001,7,,11995-03-01,city of london,79121,E09000001,14,,11995-04-01,city of london,77101,E09000001,7,,11995-05-01,city of london,84409,E09000001,10,,11995-06-01,city of london,94901,E09000001,17,,11995-07-01,city of london,110128,E09000001,13,,11995-08-01,city of london,112329,E09000001,14,,11995-09-01,city of london,104473,E09000001,17,,1</code></pre><p>从以上内容可见，样本文件是一个多行的文件，每一行为一个样本，每一列表示该样本的一个属性（特征）。</p><h2 id="特征解释"><a href="#特征解释" class="headerlink" title="特征解释"></a>特征解释</h2><ol><li><code>date</code>: 该字段表示采样日期</li><li><code>area</code>: 该字段表示样本所属地区</li><li><code>average_price</code>: 该字段表示房屋均价</li><li><code>code</code>: 该字段表示所属地区的邮政编码</li><li><code>houses_sold</code>: 该字段表示所属地区出售房屋数量</li><li><code>no_of_crimes</code>: 该字段表示所属地区的犯罪案件数量</li><li><code>borough_flag</code>: 该字段表示所属区域是否是一个自治区</li></ol><p>通过进一步观察发现，<code>date</code>字段为日期类型，<code>area</code>和<code>code</code>字段为字符串类型，其他所有字段均为数值类型。</p><h2 id="建模"><a href="#建模" class="headerlink" title="建模"></a>建模</h2><p>下面让我们来考虑一下如何进行建模（创建数据结构），首先根据第一行内容我们可以得到一些column（字段）</p><pre><code>type columnType int const (    columnTime columnType = iota    columnString    columnInt    columnFloat)// Column data columntype Column struct {    index      int     name       string    t          columnType    timeParse  func(string) time.Time    timeFormat func(time.Time) string}</code></pre><p>根据上面的类型定义，我们需要支持<code>string</code>、<code>int</code>、<code>float</code>和<code>time</code>四种类型的字段（引入float类型仅为了方便运算）。类型中的<code>index</code>和<code>name</code>是为了定位到字段的位置与名称的，<code>timeParse</code>函数和<code>timeFormat</code>函数用于对日期时间类型的字段进行序列化与反序列化。</p>]]></content>
     
