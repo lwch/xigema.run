@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 超哥的机器学习之路
-subtitle: 超哥的机器学习成长之路
+title: 超哥的小院
+subtitle: 超哥的小院
 description: ''
-keywords:
+keywords: 机器学习,LR,Golang
 author: 李文超
 language: zh-CN
 timezone: Asia/Shanghai
